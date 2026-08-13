@@ -1,0 +1,25 @@
+---
+- name: Build backend Docker image from repo
+  become: true
+  docker_image:
+    name: "{{ backend_image }}"
+    build:
+      path: "{{ repo_dest }}/backend"
+    source: build
+    state: present
+  tags: [backend, build]
+
+- name: Run backend container
+  become: true
+  docker_container:
+    name: "{{ backend_container_name }}"
+    image: "{{ backend_image }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: "{{ docker_network_name }}"
+    env:
+      MONGODB_URI: "mongodb://{{ mongo_container_name }}:27017/yolomy"
+    published_ports:
+      - "{{ backend_port }}:{{ backend_port }}"
+  tags: [backend, containers]
