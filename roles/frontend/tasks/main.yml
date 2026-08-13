@@ -1,0 +1,23 @@
+---
+- name: Build frontend Docker image from repo
+  become: true
+  docker_image:
+    name: "{{ frontend_image }}"
+    build:
+      path: "{{ repo_dest }}/client"
+    source: build
+    state: present
+  tags: [frontend, build]
+
+- name: Run frontend container
+  become: true
+  docker_container:
+    name: "{{ frontend_container_name }}"
+    image: "{{ frontend_image }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: "{{ docker_network_name }}"
+    published_ports:
+      - "{{ frontend_port }}:{{ frontend_port }}"
+  tags: [frontend, containers]
