@@ -1,0 +1,36 @@
+---
+- name: Provision and deploy the Yolo e-commerce application
+  hosts: vagrant
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install and configure Docker
+      block:
+        - include_role:
+            name: docker
+      tags: [docker]
+
+    - name: Clone application repository
+      block:
+        - include_role:
+            name: app_repo
+      tags: [repo]
+
+    - name: Deploy MongoDB container
+      block:
+        - include_role:
+            name: mongodb
+      tags: [mongodb]
+
+    - name: Deploy backend container
+      block:
+        - include_role:
+            name: backend
+      tags: [backend]
+
+    - name: Deploy frontend container
+      block:
+        - include_role:
+            name: frontend
+      tags: [frontend]
