@@ -1,0 +1,8 @@
+---
+- name: Clone the yolo application repository
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_dest }}"
+    version: master
+    force: true
+  tags: [repo, setup]
