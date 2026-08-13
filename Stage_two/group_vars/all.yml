@@ -1,0 +1,17 @@
+---
+repo_url: "https://github.com/kyos-hub/yolo.git"
+repo_dest: "/home/vagrant/yolo"
+
+docker_network_name: "yolo-net"
+
+mongo_image: "mongo:6.0"
+mongo_container_name: "allan-yolo-mongo"
+mongo_volume_name: "allan-mongo-data"
+
+backend_image: "yos2/allan-yolo-backend:v1.0.0"
+backend_container_name: "allan-yolo-backend"
+backend_port: 5000
+
+frontend_image: "yos2/allan-yolo-client:v1.0.0"
+frontend_container_name: "allan-yolo-client"
+frontend_port: 3000
