@@ -1,0 +1,15 @@
+---
+- name: Run MongoDB container
+  become: true
+  docker_container:
+    name: "{{ mongo_container_name }}"
+    image: "{{ mongo_image }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: "{{ docker_network_name }}"
+    volumes:
+      - "{{ mongo_volume_name }}:/data/db"
+    published_ports:
+      - "27017:27017"
+  tags: [mongodb, containers]
